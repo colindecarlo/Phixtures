@@ -1,0 +1,24 @@
+<?php
+
+class {{ name|capitalize }}BaseFixture
+{
+	
+	{% for column in columns|keys %}
+public {{ column }};
+	{% endfor %}
+
+	public function __construct()
+	{
+	{% for column, details in columns %}
+	{% if not details.nullable %}
+$this->{{ column}} = {{ details.default }};
+	{% endif %}
+	{% endfor %}
+
+		$this->init();
+	}
+
+	public function init()
+	{
+	}
+}
