@@ -3,23 +3,37 @@
 namespace Phixtures\Reflect;
 
 use Phixtures\Reflect\DatabaseAdapter\DatabaseAdapterInterface;
+use Phixtures\Reflect\Schema;
 
-class Table {
+class Table
+{
 
-	protected $_adapter = null;
-	protected $_name = null;
+	protected $_name;
+	protected $_schema;
+	protected $_adapter;
 	protected $_columns = array();
 	protected $_baseClass = '';
 
-	public function __construct($name, DatabaseAdapterInterface $adapter)
+	public function __construct($name, Schema $schema)
 	{
 		$this->_name = $name;
-		$this->_adapter = $adapter;
+		$this->_schema = $schema;
+		$this->_adapter = $this->_schema->getAdapter();
+	}
+
+	public function getName()
+	{
+		return $this->_name;
+	}
+
+	public function getSchema()
+	{
+		return $this->_schema;
 	}
 
 	public function reflect()
 	{
-		$this->_columns = $this->_adapter->getTableColumns($this->_name);
+		$this->_columns = $this->_adapter->getTableColumns($this);
 	}
 
 	public function buildBaseClass()

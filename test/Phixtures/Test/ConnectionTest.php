@@ -2,9 +2,11 @@
 
 namespace Phixtures\Test;
 
+use Phixtures\Test\TestCase;
+
 use Phixtures\Connection;
 
-class ConnectionTest extends \PHPUnit_Framework_TestCase
+class ConnectionTest extends TestCase
 {
 	public function test_construct_no_params()
 	{
@@ -22,7 +24,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 
 	public function test_construct_with_all_the_params()
 	{
-		$conn = new Connection('mysql:dbname=information_schema;host=127.0.0.1', 'root', 'localdev', 'phixtures');
+		$conn = new Connection('mysql:dbname=information_schema;host=127.0.0.1', 'root', 'localdev');
 		$this->assertInstanceOf('Phixtures\Connection', $conn);
 		$this->assertInstanceOf('PDO', \PHPUnit_Framework_Assert::readAttribute($conn, '_connection'));
 
@@ -50,20 +52,17 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 		$conn->setDsn('mysql:dbname=information_schema;host=127.0.0.1')
 			->setUser('root')
 			->setPassword('localdev')
-			->setTargetSchema('phixtures')
 			->connect();
 
 		$this->assertEquals('mysql:dbname=information_schema;host=127.0.0.1', \PHPUnit_Framework_Assert::readAttribute($conn, '_dsn'));
 		$this->assertEquals('root', \PHPUnit_Framework_Assert::readAttribute($conn, '_user'));
 		$this->assertEquals('localdev', \PHPUnit_Framework_Assert::readAttribute($conn, '_password'));
-		$this->assertEquals('phixtures', \PHPUnit_Framework_Assert::readAttribute($conn, '_targetSchema'));
 		$this->assertInstanceOf('PDO', \PHPUnit_Framework_Assert::readAttribute($conn, '_connection'));
 	}
 		
 	public function test_getters()
 	{
-		$conn = new Connection('mysql:dbname=information_schema;host=127.0.0.1', 'root', 'localdev', 'phixtures');
+		$conn = new Connection('mysql:dbname=information_schema;host=127.0.0.1', 'root', 'localdev');
 		$this->assertSame(\PHPUnit_Framework_Assert::readAttribute($conn, '_connection'), $conn->getConnection());
-		$this->assertSame(\PHPUnit_Framework_Assert::readAttribute($conn, '_targetSchema'), $conn->getTargetSchema());
 	}
 }

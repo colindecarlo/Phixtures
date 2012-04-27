@@ -5,18 +5,16 @@ namespace Phixtures;
 class Connection
 {
 
+	protected $_dsn;
+	protected $_user;
+	protected $_password;
 	protected $_connection = null;
-	protected $_dsn = '';
-	protected $_user = '';
-	protected $_password = '';
-	protected $_targetSchema = '';
 
-	public function __construct($dsn = '', $user = '', $password = '', $targetSchema = '')
+	public function __construct($dsn = '', $user = '', $password = '')
 	{
 		$this->setDsn($dsn);
 		$this->_user = $user;
 		$this->_password = $password;
-		$this->_targetSchema = $targetSchema;
 
 		if (!empty($this->_dsn) && !empty($user) && !empty($password)) {
 			$this->connect();
@@ -62,20 +60,9 @@ class Connection
 		return $this;
 	}
 
-	public function setTargetSchema($schema)
-	{
-		$this->_targetSchema = $schema;
-
-		return $this;
-	}
-
 	public function getConnection()
 	{
 		return $this->_connection;
 	}
 
-	public function getTargetSchema()
-	{
-		return $this->_targetSchema;
-	}
 }
