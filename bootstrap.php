@@ -10,4 +10,7 @@ $loader->registerNamespaces(array(
 	'Phixtures' => __DIR__ . '/src',
 	'Phixtures\\Test' => __DIR__ . '/test'
 ));
-$loader->registerPrefix('Twig_', __DIR__ . '/vendor/Twig/lib');
+$loader->registerPrefixes(array(
+	'Twig_' => __DIR__ . '/vendor/Twig/lib',
+	'Pimple' => __DIR__ . '/vendor/Pimple/lib',
+));
