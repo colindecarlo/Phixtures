@@ -7,3 +7,6 @@
 [submodule "vendor/Pimple"]
 	path = vendor/Pimple
 	url = https://github.com/fabpot/Pimple.git
+[submodule "vendor/Console"]
+	path = vendor/Console
+	url = https://github.com/symfony/Console.git
