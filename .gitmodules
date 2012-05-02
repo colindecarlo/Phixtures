@@ -1,5 +1,5 @@
-[submodule "vendor/ClassLoader"]
-	path = vendor/ClassLoader
+[submodule "vendor/Symfony/Component/ClassLoader"]
+	path = vendor/Symfony/Compnent/ClassLoader
 	url = https://github.com/symfony/ClassLoader.git
 [submodule "vendor/Twig"]
 	path = vendor/Twig
@@ -7,6 +7,6 @@
 [submodule "vendor/Pimple"]
 	path = vendor/Pimple
 	url = https://github.com/fabpot/Pimple.git
-[submodule "vendor/Console"]
-	path = vendor/Console
+[submodule "vendor/Symfony/Component/Console"]
+	path = vendor/Symfony/Component/Console
 	url = https://github.com/symfony/Console.git

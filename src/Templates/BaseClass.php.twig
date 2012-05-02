@@ -1,19 +1,23 @@
 <?php
 
-class {{ name|capitalize }}BaseFixture
+class {{ name }}
 {
 	
-	{% for column in columns|keys %}
-public {{ column }};
-	{% endfor %}
+	{% for column, details in columns -%}
+	{% if details.nullable and details.default == null -%}
+		public {{ column }} = null;
+	{% else -%}
+		public {{ column }};
+	{% endif -%}
+	{%- endfor %}
 
 	public function __construct()
 	{
-	{% for column, details in columns %}
-	{% if not details.nullable %}
-$this->{{ column}} = {{ details.default }};
-	{% endif %}
-	{% endfor %}
+		{% for column, details in columns -%}
+		{% if details.default != null -%}
+			$this->{{ column }} = '{{ details.default }}';
+		{% endif -%}
+		{%- endfor %}
 
 		$this->init();
 	}

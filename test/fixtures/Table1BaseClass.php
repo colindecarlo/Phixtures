@@ -4,11 +4,11 @@ class Table1BaseFixture
 {
 	
 	public column_1;
-	public column_2;
+	public column_2 = null;
 	
 	public function __construct()
 	{
-		$this->column_1 = 42;
+		$this->column_1 = '42';
 				
 		$this->init();
 	}

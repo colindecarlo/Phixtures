@@ -1,0 +1,11 @@
+#!/usr/bin/env php
+<?php
+
+require_once 'bootstrap.php';
+
+use Phixtures\DIContainer;
+use Phixtures\Application;
+
+$container = new DIContainer();
+$application = new Application($container);
+$application->run();

@@ -15,14 +15,14 @@ class DIContainer extends \Pimple
 			'adapter_class' => '\Phixtures\Reflect\DatabaseAdapter\MySQL',
 		),
 		'fixtures' => array(
-			'target_directory' => '/Users/colin/development/scratch/phixtures'
+			'target_directory' => '/tmp/phixtures'
 		),
 	);
 
 	public function __construct()
 	{
 		foreach ($this->_config as $key => $value) {
-			$this[$key] = $value;
+			$this->_setConfigParameter($key, $value);
 		}
 
 		$methods = get_class_methods($this);
@@ -34,12 +34,21 @@ class DIContainer extends \Pimple
 		}
 	}
 
+	protected function _setConfigParameter($key, $value) {
+		if (is_array($value)) {
+			foreach ($value as $subkey => $subvalue) {
+				$this->_setConfigParameter($key . '.'  . $subkey, $subvalue);
+			}
+		} else {
+			$this[$key] = $value;
+		}
+	}
+
 	protected function _buildConnection()
 	{
 		$this['database.connection'] = $this->share(
 			function () {
-				$config = $this['database'];
-				return new \Phixtures\Connection($config['dsn'], $config['user'], $config['password']);
+				return new \Phixtures\Connection($this['database.dsn'], $this['database.user'], $this['database.password']);
 			}
 		);
 	}
@@ -48,8 +57,7 @@ class DIContainer extends \Pimple
 	{
 		$this['database.adapter'] = $this->share(
 			function () {
-				$config = $this['database'];
-				return new $config['adapter_class']($this['database.connection']);
+				return new $this['database.adapter_class']($this['database.connection']);
 			}
 		);
 	}
@@ -58,8 +66,7 @@ class DIContainer extends \Pimple
 	{
 		$this['database.schema'] = $this->share(
 			function () {
-				$config = $this['database'];
-				return new \Phixtures\Reflect\Schema($config['target_schema'], $this['database.adapter']);
+				return new \Phixtures\Reflect\Schema($this['database.target_schema'], $this['database.adapter']);
 			}
 		);
 	}

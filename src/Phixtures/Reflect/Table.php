@@ -5,7 +5,7 @@ namespace Phixtures\Reflect;
 use Phixtures\Reflect\DatabaseAdapter\DatabaseAdapterInterface;
 use Phixtures\Reflect\Schema;
 
-class Table
+class Table implements \IteratorAggregate, \Countable
 {
 
 	protected $_name;
@@ -31,6 +31,29 @@ class Table
 		return $this->_schema;
 	}
 
+	public function getBaseClass()
+	{
+		return $this->_baseClass;
+	}
+
+	public function getBaseClassName()
+	{
+		$parts = explode('_', $this->_name);
+		$capatalized = array_map('ucfirst', $parts);
+		$inflectedName = implode('',$capatalized);
+		return $inflectedName . 'BaseFixture';
+	}
+
+	public function getIterator()
+	{
+		return new \ArrayIterator($this->_columns);
+	}
+
+	public function count()
+	{
+		return count($this->_columns);
+	}
+
 	public function reflect()
 	{
 		$this->_columns = $this->_adapter->getTableColumns($this);
@@ -47,11 +70,12 @@ class Table
 
 		$template = $twig->loadTemplate('BaseClass.php.twig');
 		$this->_baseClass = $template->render(array(
-			'name' => $this->_name,
+			'name' => $this->getBaseClassName(),
 			'columns' => $this->_columns
 		));
 
 		return $this;
 	}
+
 
 }

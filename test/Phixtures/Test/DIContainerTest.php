@@ -18,19 +18,24 @@ class DIContainerTest extends TestCase
 	{
 		$expectedBossModeConfig = true;
 		$expectedDatabaseConfig = array(
-			'dsn' => 'mysql:dbname=information_schema;host=127.0.0.1',
-			'user' => 'root',
-			'password' => 'localdev',
-			'target_schema' => 'phixtures',
-			'adapter_class' => '\Phixtures\Reflect\DatabaseAdapter\MySQL',
+			'database.dsn' => 'mysql:dbname=information_schema;host=127.0.0.1',
+			'database.user' => 'root',
+			'database.password' => 'localdev',
+			'database.target_schema' => 'phixtures',
+			'database.adapter_class' => '\Phixtures\Reflect\DatabaseAdapter\MySQL',
 		);
 		$expectedFixturesConfig = array(
-			'target_directory' => '/Users/colin/development/scratch/phixtures'
+			'fixtures.target_directory' => '/tmp/phixtures'
 		);
 
 		$this->assertEquals($expectedBossModeConfig, $this->container['BOSS_MODE']);
-		$this->assertEquals($expectedDatabaseConfig, $this->container['database']);
-		$this->assertEquals($expectedFixturesConfig, $this->container['fixtures']);
+
+		foreach ($expectedDatabaseConfig as $key => $expectedValue) {
+			$this->assertEquals($expectedValue, $this->container[$key]);
+		}
+		foreach ($expectedFixturesConfig as $key => $expectedValue) {
+			$this->assertEquals($expectedValue, $this->container[$key]);
+		}
 	}
 
 	public function test_constructor_calls_build_methods()
