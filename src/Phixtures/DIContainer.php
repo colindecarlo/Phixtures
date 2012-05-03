@@ -19,8 +19,10 @@ class DIContainer extends \Pimple
 		),
 	);
 
-	public function __construct()
+	public function __construct(array $config = array())
 	{
+		$this->_config = array_replace_recursive($this->_config, $config);
+
 		foreach ($this->_config as $key => $value) {
 			$this->_setConfigParameter($key, $value);
 		}
@@ -47,8 +49,8 @@ class DIContainer extends \Pimple
 	protected function _buildConnection()
 	{
 		$this['database.connection'] = $this->share(
-			function () {
-				return new \Phixtures\Connection($this['database.dsn'], $this['database.user'], $this['database.password']);
+			function ($c) {
+				return new \Phixtures\Connection($c['database.dsn'], $c['database.user'], $c['database.password']);
 			}
 		);
 	}
@@ -56,8 +58,8 @@ class DIContainer extends \Pimple
 	protected function _buildAdapter()
 	{
 		$this['database.adapter'] = $this->share(
-			function () {
-				return new $this['database.adapter_class']($this['database.connection']);
+			function ($c) {
+				return new $c['database.adapter_class']($c['database.connection']);
 			}
 		);
 	}
@@ -65,8 +67,17 @@ class DIContainer extends \Pimple
 	protected function _buildSchema()
 	{
 		$this['database.schema'] = $this->share(
-			function () {
-				return new \Phixtures\Reflect\Schema($this['database.target_schema'], $this['database.adapter']);
+			function ($c) {
+				return new \Phixtures\Reflect\Schema($c['database.target_schema'], $c['database.adapter']);
+			}
+		);
+	}
+
+	protected function _buildApplication()
+	{
+		$this['application'] = $this->share(
+			function ($c) {
+				return new \Phixtures\Application($c);
 			}
 		);
 	}

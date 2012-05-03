@@ -4,8 +4,15 @@
 require_once 'bootstrap.php';
 
 use Phixtures\DIContainer;
-use Phixtures\Application;
 
-$container = new DIContainer();
-$application = new Application($container);
+$DIConfig = array(
+	'database' => array(
+		'user' => 'root',
+		'password' => '',
+		'target_schema' => 'dev',
+	),
+);
+
+$container = new DIContainer($DIConfig);
+$application = $container['application'];
 $application->run();
