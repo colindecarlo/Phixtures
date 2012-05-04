@@ -13,10 +13,19 @@ class MySQLTest extends TestCase
 {
 	public function setUp()
 	{
-		$conn = new Connection('mysql:dbname=information_schema;host=127.0.0.1', 'root', 'localdev');
-		$this->adapter = new MySQL($conn);
-		$this->schema = new Schema('phixtures', $this->adapter);
-		$this->table1 = new Table('table1', $this->schema);
+		if (extension_loaded('pdo_mysql')) {
+			$conn = new Connection($GLOBALS['MYSQL_DSN'], $GLOBALS['MYSQL_USER'], $GLOBALS['MYSQL_PASSWORD']);
+			try {
+				$conn->connect();
+				$this->adapter = new MySQL($conn);
+				$this->schema = new Schema($GLOBALS['MYSQL_DBNAME'], $this->adapter);
+				$this->table1 = new Table('table1', $this->schema);
+			} catch (\PDOException $e) {
+				$this->markTestSkipped('Unable to connect to mysql, check your connection settings in phpunit.xml');
+			}
+		} else {
+			$this->markTestSkipped('pdo_mysql extension is not loaded');
+		}
 	}
 
 	public function test_getSchemaTables()

@@ -1,8 +1,8 @@
 <phpunit backupGlobals="true"
          backupStaticAttributes="false"
-	 bootstrap="../bootstrap.php"
+         bootstrap="../bootstrap.php"
          cacheTokens="true"
-         colors="false"
+         colors="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
@@ -15,13 +15,18 @@
          stopOnIncomplete="false"
          stopOnSkipped="false"
          testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
-         strict="false"
-         verbose="false">
+         strict="false">
+
+	<php>
+		<var name="MYSQL_DSN" value="mysql:dbname=information_schema;host=127.0.0.1" />
+		<var name="MYSQL_USER" value="root" />
+		<var name="MYSQL_PASSWORD" value="localdev" />
+		<var name="MYSQL_DBNAME" value="phixtures" />
+	</php>
 
 	<testsuites>
 		<testsuite name="All" suffix="Test.php">
 			<directory>.</directory>
 		</testsuite>
 	</testsuites>
-
 </phpunit>
