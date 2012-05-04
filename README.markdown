@@ -6,10 +6,7 @@ About
 
 Phixtures is a tool to aid in the development and maintenance of fixture files.
 
-Phixtures can't:
- * do anything
-
-Phixtures can almost:
+Phixtures can:
  * introspect your database and create base fixture classes
 
 Phixtures will be able to:
