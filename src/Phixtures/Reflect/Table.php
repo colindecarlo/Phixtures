@@ -2,7 +2,6 @@
 
 namespace Phixtures\Reflect;
 
-use Phixtures\Reflect\DatabaseAdapter\DatabaseAdapterInterface;
 use Phixtures\Reflect\Schema;
 
 class Table implements \IteratorAggregate, \Countable

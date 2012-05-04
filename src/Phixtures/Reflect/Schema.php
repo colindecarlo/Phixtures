@@ -2,7 +2,7 @@
 
 namespace Phixtures\Reflect;
 
-use Phixtures\Reflect\DatabaseAdapter\DatabaseAdapterInterface;
+use Phixtures\Reflect\DatabaseAdapter\Base;
 use Phixtures\Reflect\Table;
 
 class Schema implements \IteratorAggregate, \Countable
@@ -11,7 +11,7 @@ class Schema implements \IteratorAggregate, \Countable
 	protected $_adapter;
 	protected $_tables = array();
 
-	public function __construct($name, DatabaseAdapterInterface $adapter)
+	public function __construct($name, Base $adapter)
 	{
 		$this->_name = $name;
 		$this->_adapter = $adapter;

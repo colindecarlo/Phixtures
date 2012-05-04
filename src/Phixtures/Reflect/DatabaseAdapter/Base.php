@@ -5,9 +5,8 @@ namespace Phixtures\Reflect\DatabaseAdapter;
 use Phixtures\Connection;
 use Phixtures\Reflect\Table;
 use Phixtures\Reflect\Schema;
-use Phixtures\Reflect\DatabaseAdapter\DatabaseAdapterInterface;
 
-abstract class Base implements DatabaseAdapterInterface
+abstract class Base
 {
 
 	protected $_connection;

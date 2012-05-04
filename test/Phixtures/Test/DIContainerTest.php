@@ -60,7 +60,7 @@ class DIContainerTest extends TestCase
 	public function test_adapter_is_built()
 	{
 		$adapter = $this->container['database.adapter'];
-		$this->assertInstanceOf('\Phixtures\Reflect\DatabaseAdapter\DatabaseAdapterInterface', $adapter);
+		$this->assertInstanceOf('\Phixtures\Reflect\DatabaseAdapter\Base', $adapter);
 	}
 
 	public function test_schema_is_built()
