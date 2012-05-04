@@ -9,7 +9,7 @@ class Table1BaseFixture
 	public function __construct()
 	{
 		$this->column_1 = '42';
-				
+		
 		$this->init();
 	}
 
