@@ -15,11 +15,6 @@ class Connection
 		$this->setDsn($dsn);
 		$this->_user = $user;
 		$this->_password = $password;
-
-		if (!empty($this->_dsn) && !empty($user) && !empty($password)) {
-			$this->connect();
-		}
-
 	}
 
 	public function setDsn($dsn) {
@@ -62,6 +57,9 @@ class Connection
 
 	public function getConnection()
 	{
+		if (null === $this->_connection) {
+			$this->connect();
+		}
 		return $this->_connection;
 	}
 
